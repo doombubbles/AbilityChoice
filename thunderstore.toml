@@ -1,0 +1,32 @@
+[package]
+name = "AbilityChoice"
+namespace = "doombubbles"
+description = "Adds in new choices for towers with abilities that you can pick instead of having an active ability. Selected in the Upgrades menu for the tower by Right-Clicking on the Upgrade to switch."
+websiteUrl = "https://github.com/doombubbles/AbilityChoice"
+
+[package.dependencies]
+LavaGang-MelonLoader = "0.7.3"
+doombubbles-Btd6ModHelper = "3.6.5"
+
+[build]
+icon = "./Icon.png"
+readme = "./README.md"
+outdir = "bin"
+
+[[build.copy]]
+source = "./bin/Release/AbilityChoice.dll"
+target = "AbilityChoice.dll"
+
+[[build.copy]]
+source = "./CHANGELOG.md"
+target = "./CHANGELOG.md"
+
+[[build.copy]]
+source = "./LICENSE"
+target = "./LICENSE"
+
+[publish]
+repository = "https://thunderstore.io"
+communities = ["bloons-td-6"]
+categories = ["mods"]
+

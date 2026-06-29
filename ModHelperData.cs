@@ -16,5 +16,6 @@ internal static class ModHelperData
         """;
 
     public const string RepoOwner = "doombubbles";
-    public const string RepoName = "ability-choice";
+    public const string PrevRepoName = "ability-choice";
+    public const string RepoName = "AbilityChoice";
 }
