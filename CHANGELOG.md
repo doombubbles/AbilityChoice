@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+- Fixed for BTD6 v56
+
 ## [4.4.6] - 2026-06-24
 
 - Fixed Apply After Challenge Rules setting making ability choices not fully apply in Legends gamemodes

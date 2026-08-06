@@ -64,7 +64,7 @@ public class BloodSacrifice : HeroAbilityChoice
         var bridge = UnityToSimulation.Current;
 
         var adoras = sim.towerManager.GetTowersByBaseId(TowerType.Adora).ToList()
-            .Where(tower => tower.owner == bridge.MyPlayerNumber);
+            .Where(tower => tower.owner == bridge.GetInputId());
 
         foreach (var adora in adoras)
         {

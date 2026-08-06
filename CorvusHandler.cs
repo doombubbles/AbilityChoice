@@ -149,7 +149,7 @@ public static class CorvusHandler
                 !__instance.TowerBasedShopItemModel.Is(out CorvusInstantSpellModel spell) ||
                 !CorvusAbilityChoice.EnabledForSpell(spell.spellType)) return true;
 
-            var status = InGame.Bridge.GetCorvusSpellStatus(spell.spellType, InGame.Bridge.MyPlayerNumber);
+            var status = InGame.Bridge.GetCorvusSpellStatus(spell.spellType, InGame.Bridge.GetInputId());
             __instance.deactivateButton.gameObject.SetActive(status.isActive);
             return false;
         }
@@ -167,7 +167,7 @@ public static class CorvusHandler
             if (!__instance.TowerBasedShopItemModel.Is(out CorvusInstantSpellModel spell) ||
                 !CorvusAbilityChoice.EnabledForSpell(spell.spellType)) return true;
 
-            InGame.Bridge.Simulation.GetCorvusManager(InGame.Bridge.MyPlayerNumber).CancelInstantSpell(spell.spellType);
+            InGame.Bridge.Simulation.GetCorvusManager(InGame.Bridge.GetInputId()).CancelInstantSpell(spell.spellType);
             return false;
         }
     }

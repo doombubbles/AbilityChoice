@@ -26,7 +26,7 @@ public class AbilityChoiceTest : ModTest
                 yield return null;
                 yield return null;
                 yield return null;
-                Bridge.SellTower(tower.Id);
+                Bridge.SellTower(Bridge.GetInputId(), tower.Id);
             }
         }
 

@@ -62,8 +62,8 @@ internal static class OverclockHandler
 
     public static void ApplyOverclock(Tower from, Tower to, TapTowerAbilityBehavior behavior)
     {
-        if (from.Sim.factory.GetUncast<TapTowerAbilityBehavior>().ToArray().Count(o => o.selectedTower?.Id == to.Id) <=
-            1)
+
+        if (from.Sim.factory.Get<TapTowerAbilityBehavior>().ToArray().Count(overclock => overclock.selectedTower?.Id == to.Id) <= 1)
         {
             to.RemoveMutatorsById(behavior.MutatorId());
         }

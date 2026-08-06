@@ -11,8 +11,7 @@ public class Nourishment : CorvusAbilityChoice
 {
     protected override int Order => 1;
 
-    public override string Description1 => "Sacrifices Mana and converts it into Hero XP.";
-    public override string Description1Lvl20 => "Consumes Mana and converts it into cash.";
+    public override string Description1 => "Consumes Mana and converts it into cash.";
 
     protected override bool HasMode2 => false;
 
@@ -46,18 +45,11 @@ public class Nourishment : CorvusAbilityChoice
             if (!EnabledForSpell(CorvusSpellType.Nourishment)) return true;
 
             var tower = __instance.tower;
-            var hero = tower.entity
-                .GetBehaviorInDependants<Il2CppAssets.Scripts.Simulation.Towers.Behaviors.Hero>();
-
             var mana = __instance.SpellModel.initialManaCost;
             
-            if (hero.GetHeroLevel() < hero.maxLevel)
+            if (__instance.Sim.model.gameMode != "Clicks" && __instance.Sim.model.gameMode != "Deflation")
             {
-                hero.AddXp(mana * __instance.spellModel.xpPerMana);
-            }
-            else if (__instance.Sim.model.gameMode != "Clicks" && __instance.Sim.model.gameMode != "Deflation")
-            {
-                __instance.Sim.AddCash(mana * __instance.spellModel.cashPerManaAtMaxLevel, Simulation.CashType.Ability,
+                __instance.Sim.AddCash(mana * __instance.spellModel.cashPerMana, Simulation.CashType.Ability,
                     tower.owner, Simulation.CashSource.CorvusNourishment);
             }
 

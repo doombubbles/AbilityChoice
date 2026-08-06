@@ -345,7 +345,7 @@ public class AbilityChoiceMod : BloonsTD6Mod
 
     public override bool PreBloonLeaked(Bloon bloon)
     {
-        var me = InGame.Bridge?.MyPlayerNumber ?? -1;
+        var me = InGame.Bridge?.GetInputId() ?? -1;
         if (bloon.Sim.GetCorvusManagerExists(me))
         {
             var corvus = bloon.Sim.GetCorvusManager(me);
