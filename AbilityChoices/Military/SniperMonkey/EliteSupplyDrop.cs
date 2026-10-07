@@ -8,7 +8,7 @@ public class EliteSupplyDrop : SupplyDrop
 {
     public override string UpgradeId => UpgradeType.EliteSniper;
 
-    public override string AbilityName => "Supply Drop";
+    public override string AbilityName => "Supply Drop 5";
 
     public override string Description1 =>
         "Occasionally drops more cash. Grants Elite targeting prio and faster reload to all snipers.";

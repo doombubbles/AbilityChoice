@@ -7,6 +7,8 @@ public class SupplyDrop : TowerAbilityChoice
 {
     public override string UpgradeId => UpgradeType.SupplyDrop;
 
+    public override string BackUpAbilityName => "Supply Drop 5";
+
     public override string Description1 =>
         "Occasionally drops crates of cash. Regular attack also damages Lead Bloons and increases Shrapnel popping power.";
 
