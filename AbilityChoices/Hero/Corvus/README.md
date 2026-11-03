@@ -31,7 +31,7 @@
         <h4>Nourishment</h4>
     </td>
     <td>
-       Sacrifices Mana and converts it into Hero XP.
+       Consumes Mana and converts it into cash.
     </td>
     <td>
        -

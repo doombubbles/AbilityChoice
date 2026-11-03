@@ -1,9 +1,14 @@
 ﻿using System.Collections.Generic;
 using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
 using Il2CppAssets.Scripts.Models;
 using Il2CppAssets.Scripts.Models.GeraldoItems;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
+using Il2CppAssets.Scripts.Simulation.GeraldoItems;
+using Il2CppAssets.Scripts.Simulation.Objects;
+using Il2CppAssets.Scripts.Simulation.SMath;
+using Il2CppAssets.Scripts.Simulation.Towers;
 
 namespace AbilityChoice.AbilityChoices.Hero.Geraldo;
 
@@ -47,5 +52,64 @@ public class BottleHotSauce : GeraldoAbilityChioce
         {
             towerModel.GetDescendant<TowerExpireModel>().rounds = -1;
         }
+    }
+}
+
+[HarmonyPatch(typeof(BottleHotSauceBehavior), nameof(BottleHotSauceBehavior.Activate))]
+internal static class BottleHotSauceBehavior_Activate
+{
+    [HarmonyPrefix]
+    private static bool Prefix(BottleHotSauceBehavior __instance, Vector2 location, int inputId)
+    {
+        var selectableObject = __instance.sim.Map.GetSelection(location, 20);
+
+        if (selectableObject.Is(out Tower tower) && tower.IsMutatedBy(nameof(BottleHotSauce)))
+        {
+            tower.RemoveMutatorsById(nameof(BottleHotSauce));
+
+            __instance.sim.towerManager.GetChildTowers(tower).ForEach(t =>
+            {
+                if (t.towerModel.baseId == TowerType.HotSauceCreature)
+                {
+                    __instance.sim.towerManager.DestroyTower(t, inputId);
+                }
+            });
+        }
+
+        return true;
+    }
+}
+
+[HarmonyPatch(typeof(BottleHotSauceBehavior), nameof(BottleHotSauceBehavior.IsPositionValid))]
+internal static class BottleHotSauceBehavior_IsPositionValid
+{
+    public static bool CurrentlyChecking { get; private set; }
+
+    [HarmonyPrefix]
+    private static void Prefix(BottleHotSauceBehavior __instance)
+    {
+        CurrentlyChecking = true;
+    }
+
+    [HarmonyPostfix]
+    private static void Postfix()
+    {
+        CurrentlyChecking = false;
+    }
+}
+
+[HarmonyPatch(typeof(Mutable), nameof(Mutable.IsMutatedBy), typeof(string))]
+internal static class Mutable_IsMutatedBy
+{
+    [HarmonyPrefix]
+    private static bool Prefix(string id, ref bool __result)
+    {
+        if (BottleHotSauceBehavior_IsPositionValid.CurrentlyChecking && id == nameof(BottleHotSauce))
+        {
+            __result = false;
+            return false;
+        }
+
+        return true;
     }
 }

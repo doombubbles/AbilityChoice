@@ -5,6 +5,7 @@ using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Filters;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
+
 namespace AbilityChoice.AbilityChoices.Military.HeliPilot;
 
 public class SupportDrop : TowerAbilityChoice
@@ -19,7 +20,6 @@ public class SupportDrop : TowerAbilityChoice
 
     public override void Apply1(TowerModel model)
     {
-        TechBotify(model);
     }
 
     public override void Apply2(TowerModel model)
@@ -55,6 +55,10 @@ public class SupportDrop : TowerAbilityChoice
         if (Mode2)
         {
             base.RemoveAbility(model);
+        }
+        else
+        {
+            TechBotify(model);
         }
     }
 }

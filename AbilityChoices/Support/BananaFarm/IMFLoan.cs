@@ -2,6 +2,7 @@
 using BTD_Mod_Helper.Extensions;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
+
 namespace AbilityChoice.AbilityChoices.Support.BananaFarm;
 
 public class IMFLoan : TowerAbilityChoice
@@ -14,7 +15,6 @@ public class IMFLoan : TowerAbilityChoice
 
     public override void Apply1(TowerModel model)
     {
-        TechBotify(model);
     }
 
     public override void Apply2(TowerModel model)
@@ -27,6 +27,10 @@ public class IMFLoan : TowerAbilityChoice
         if (Mode2)
         {
             base.RemoveAbility(model);
+        }
+        else
+        {
+            TechBotify(model);
         }
     }
 }

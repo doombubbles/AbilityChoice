@@ -28,8 +28,6 @@ public class Overcharge : TowerAbilityChoice
         var overcharge = ability.GetBehavior<OverchargeModel>();
 
         overcharge.durationPerStack /= Factor;
-
-        TechBotify(model);
     }
 
     public override void Apply2(TowerModel model)
@@ -38,6 +36,18 @@ public class Overcharge : TowerAbilityChoice
         {
             rateSupportModel.appliesToOwningTower = true;
             rateSupportModel.multiplier = .8f;
+        }
+    }
+
+    protected override void RemoveAbility(TowerModel model)
+    {
+        if (Mode2)
+        {
+            base.RemoveAbility(model);
+        }
+        else
+        {
+            TechBotify(model);
         }
     }
 }

@@ -11,10 +11,10 @@ public class EliteSupplyDrop : SupplyDrop
     public override string AbilityName => "Supply Drop 5";
 
     public override string Description1 =>
-        "Occasionally drops more cash. Grants Elite targeting prio and faster reload to all snipers.";
+        "Cash Supply Drop gives much more cash. Ammo Supply Drop buffs up to 2 other nearby Snipers. Grants Elite targeting prio and faster reload to all snipers";
 
     public override string Description2 =>
-        "Bullets bounce even more, and can bounce back to the same target. Grants Elite targeting prio and faster reload to all snipers.";
+        "Bullets can bounce back to the same target. Grants Elite targeting prio and faster reload to all snipers.";
 
     public override void Apply2(TowerModel model)
     {

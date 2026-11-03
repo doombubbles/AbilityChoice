@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
+using Il2CppAssets.Scripts.Models;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Abilities.Behaviors;
@@ -37,8 +39,39 @@ public class BallOfLight : HeroAbilityChoice
         {
             name = Name + model.tier, towerModel = tower, isAirBasedTower = true
         }));
-        
+
         // keep around for AdoraSunGodTransformation
         model.AddBehavior(createTower);
+    }
+}
+
+[HarmonyPatch(typeof(AdoraSunGodTransformationModel.Mutator), nameof(AdoraSunGodTransformationModel.Mutator.Mutate))]
+internal static class AdoraSunGodTransformationModel_Mutator_Mutate
+{
+    [HarmonyPostfix]
+    private static void Postfix(Model model)
+    {
+        var newBall = model.GetDescendant<AbilityCreateTowerModel>().towerModel;
+        model.GetDescendants<TowerCreateTowerModel>().ForEach(createTower =>
+        {
+            createTower.towerModel = newBall;
+            createTower.name += "SunGod";
+        });
+    }
+}
+
+[HarmonyPatch(typeof(AdoraSunGodTransformationModel.DarkMutator),
+    nameof(AdoraSunGodTransformationModel.DarkMutator.Mutate))]
+internal static class AdoraSunGodTransformationModel_DarkMutator_Mutate
+{
+    [HarmonyPostfix]
+    private static void Postfix(Model model)
+    {
+        var newBall = model.GetDescendant<AbilityCreateTowerModel>().towerModel;
+        model.GetDescendants<TowerCreateTowerModel>().ForEach(createTower =>
+        {
+            createTower.towerModel = newBall;
+            createTower.name += "Dark";
+        });
     }
 }

@@ -29,8 +29,6 @@ public class Spikeageddon : TowerAbilityChoice
 
         proj.GetDescendants<DamageModel>().ForEach(damageModel => damageModel.damage /= Factor);
         proj.GetDescendants<DamageModifierForTagModel>().ForEach(tagModel => tagModel.damageAddative /= Factor);
-
-        TechBotify(model);
     }
 
     public override void Apply2(TowerModel model)
@@ -61,6 +59,18 @@ public class Spikeageddon : TowerAbilityChoice
         var ability = model.GetAbilities().First(a => a.displayName == "Controlled Burst");
 
         TechBotify(model, ability);
+    }
+
+    protected override void RemoveAbility(TowerModel model)
+    {
+        if (Mode2)
+        {
+            base.RemoveAbility(model);
+        }
+        else
+        {
+            TechBotify(model);
+        }
     }
 
 }

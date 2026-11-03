@@ -6,6 +6,7 @@ using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Emissions;
 using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
+
 namespace AbilityChoice.AbilityChoices.Military.SniperMonkey;
 
 public class SpecialPoperations : TowerAbilityChoice
@@ -19,7 +20,6 @@ public class SpecialPoperations : TowerAbilityChoice
 
     public override void Apply1(TowerModel model)
     {
-        TechBotify(model);
     }
 
     public override void Apply2(TowerModel model)
@@ -53,6 +53,10 @@ public class SpecialPoperations : TowerAbilityChoice
         if (Mode2)
         {
             base.RemoveAbility(model);
+        }
+        else
+        {
+            TechBotify(model);
         }
     }
 }

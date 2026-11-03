@@ -13,6 +13,7 @@ using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
 using Il2CppAssets.Scripts.Simulation.Towers.Behaviors;
 using Il2CppAssets.Scripts.Unity;
 using Il2CppNinjaKiwi.Common.ResourceUtils;
+
 namespace AbilityChoice.AbilityChoices.Military.MonkeyAce;
 
 public class CarpetBomb : TowerAbilityChoice
@@ -37,8 +38,6 @@ public class CarpetBomb : TowerAbilityChoice
         proj.GetDescendants<DamageModel>().ForEach(damageModel => damageModel.damage /= Factor);
         proj.GetDescendants<DamageModifierForTagModel>().ForEach(tagModel => tagModel.damageAddative /= Factor);
         proj.GetDescendants<SlowModel>().ForEach(slowModel => slowModel.Lifespan /= Factor);
-
-        TechBotify(model);
     }
 
     public override void Apply2(TowerModel model)
@@ -111,11 +110,20 @@ public class CarpetBomb : TowerAbilityChoice
                 name = "Plane" + i, towerModel = tower, isAirBasedTower = true
             }));
         }
-
-
     }
 
 
+    protected override void RemoveAbility(TowerModel model)
+    {
+        if (Mode2)
+        {
+            base.RemoveAbility(model);
+        }
+        else
+        {
+            TechBotify(model);
+        }
+    }
 
     [HarmonyPatch(typeof(FighterMovement), nameof(FighterMovement.Process))]
     internal static class FighterMovement_Process

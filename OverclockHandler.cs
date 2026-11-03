@@ -335,6 +335,26 @@ internal static class OverclockHandler
     }
 
     /// <summary>
+    /// Hide exact cooldown seconds on the selection menu button
+    /// </summary>
+    [HarmonyPatch(typeof(AbilityButton), nameof(AbilityButton.UpdateTimerCount))]
+    internal static class AbilityButton_UpdateTimerCount
+    {
+        [HarmonyPrefix]
+        internal static bool Prefix(AbilityButton __instance, AbilityToSimulation ability)
+        {
+            if (ability?.model.OverclockAbilityChoice() != true) return true;
+
+            if (__instance.timerCount != null && __instance.timerCount.gameObject.activeSelf)
+            {
+                __instance.timerCount.gameObject.SetActive(false);
+            }
+
+            return false;
+        }
+    }
+
+    /// <summary>
     /// Late saved tower data after mutators
     /// </summary>
     [HarmonyPatch(typeof(MapSaveLoader), nameof(MapSaveLoader.LoadMapSaveData))]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AbilityChoice.AbilityChoices.Hero.Adora;
+using AbilityChoice.AbilityChoices.Hero.Benjamin;
 using AbilityChoice.AbilityChoices.Primary.IceMonkey;
 using AbilityChoice.Patches;
 using BTD_Mod_Helper.Api.Enums;

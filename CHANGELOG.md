@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [4.5.0] - 2026-11-02
+
+- Added Ability Choices for the Sniper Paragon
+  - Red: "Automatically calls down ammo caches. Slowly charges up energy for a kill shot on the strongest Bloon (can occasionally negate a Boss Skull)."
+    - Single Out ability is always active but with reduced damage, original cooldown is used for how often a Boss Skull can be skipped
+  - Blue: "Shrapnel targets First with increased lifespan, pierce, and explosion count. Next attack is 4x faster if the main shot kills the target."
+    - Makes it way more valid to use with First targeting like an Elite Defender
+- Added Ability Choices for Skywarden
+  - Red Tier 4: "Occasionally electrically charges nearby Monkeys, granting them faster, ricocheting projectiles that can pop Frozen Bloons."
+  - Blue Tier 4: "Permanently electrically charges itself, granting faster, ricocheting projectiles."
+  - Red Tier 5: "Occasionally weaves a lethal web of lightning between all conduits, obliterating anything caught in the crossfire."
+  - Blue Tier 5: "Weaves a web of lightning between all conduits, damaging anything caught in the crossfire"
+- Fixed Supply Drop Red ability choice so it correctly switches according to the new v57 Ammo Swap
+- Fixed console errors for a number of Paragon Red Ability Choices
+
 ## [4.4.8] - 2026-10-06
 
 - Fixed for BTD6 v57
@@ -309,7 +324,8 @@ Desperado ability choices will be added in a subsequent update after I fix other
 - Updated for Mod Helper 3.0
 - Fixed for BTD6 v32.0
 
-[unreleased]: https://github.com/doombubbles/AbilityChoice/compare/4.4.8...HEAD
+[unreleased]: https://github.com/doombubbles/AbilityChoice/compare/4.5.0...HEAD
+[4.5.0]: https://github.com/doombubbles/AbilityChoice/compare/4.4.8...4.5.0
 [4.4.8]: https://github.com/doombubbles/AbilityChoice/compare/4.4.6...4.4.8
 [4.4.6]: https://github.com/doombubbles/ability-choice/compare/4.4.5...4.4.6
 [4.4.5]: https://github.com/doombubbles/ability-choice/compare/a0e756a6a5dae11ab1b2366429d1467e471b2c14...4.4.5

@@ -514,7 +514,7 @@ and the right column is the changed item shop descriptions for each hero level.
         <h4>Nourishment</h4>
     </td>
     <td>
-       Sacrifices Mana and converts it into Hero XP.
+       Consumes Mana and converts it into cash.
     </td>
     <td>
        -

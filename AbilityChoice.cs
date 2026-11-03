@@ -107,9 +107,8 @@ public abstract class AbilityChoice : NamedModContent
     }
 
     protected virtual AbilityModel AbilityModel(TowerModel model) =>
-        model.GetBehaviors<AbilityModel>()
-            .FirstOrDefault(abilityModel =>
-                abilityModel.displayName == AbilityName || abilityModel.displayName == BackUpAbilityName);
+        model.GetBehaviors<AbilityModel>().FirstOrDefault(abilityModel =>
+            abilityModel.displayName == AbilityName || abilityModel.displayName == BackUpAbilityName);
 
     protected virtual void RemoveAbility(TowerModel model)
     {

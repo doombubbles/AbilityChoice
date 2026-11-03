@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Abilities.Behaviors;
@@ -8,6 +10,8 @@ using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Filters;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Weapons;
+using Il2CppAssets.Scripts.Simulation.Bloons;
+using Il2CppAssets.Scripts.Simulation.Towers.Behaviors;
 
 namespace AbilityChoice.AbilityChoices.Hero.Benjamin;
 
@@ -72,5 +76,27 @@ public class SyphonFunding : HeroAbilityChoice
             trojanProj.filters = trojanProj.filters.RemoveItem(trojanProj.filters.OfIl2CppType<FilterOutTagModel>()
                 .First(filter => filter.tag == BloonTag.Zomg));
         }
+    }
+}
+
+[HarmonyPatch(typeof(Syphon), nameof(Syphon.OnBloonCreate))]
+internal static class Syphon_OnBloonCreate
+{
+    public static int counter;
+
+    [HarmonyPrefix]
+    private static void Prefix(Syphon __instance, Bloon bloon)
+    {
+        var syphonFunding = __instance.entity.GetBehavior<Il2CppAssets.Scripts.Simulation.Towers.Behaviors.Abilities.Behaviors.SyphonFunding>();
+        if (syphonFunding == null || __instance.syphonModel.ignoreTags.Any(bloon.HasTag)) return;
+
+        var everyHowMany = (int) Math.Round(1 / syphonFunding.syphonFundingModel.lifespan);
+
+        // The SyphonFundingModel is on the tower and not the ability
+        __instance.syphonFunding = syphonFunding;
+
+        syphonFunding.active = counter % everyHowMany == 0;
+
+        counter++;
     }
 }

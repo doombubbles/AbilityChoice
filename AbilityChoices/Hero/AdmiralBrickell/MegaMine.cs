@@ -2,7 +2,9 @@
 using AbilityChoice.Displays;
 using BTD_Mod_Helper.Api.Enums;
 using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
 using Il2CppAssets.Scripts.Models.Effects;
+using Il2CppAssets.Scripts.Models.Map;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Abilities.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack.Behaviors;
@@ -11,7 +13,11 @@ using Il2CppAssets.Scripts.Models.Towers.Projectiles;
 using Il2CppAssets.Scripts.Models.Towers.Projectiles.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Weapons;
 using Il2CppAssets.Scripts.Models.Towers.Weapons.Behaviors;
+using Il2CppAssets.Scripts.Simulation.Objects;
+using Il2CppAssets.Scripts.Simulation.Towers.Behaviors.Attack.Behaviors;
 using Il2CppAssets.Scripts.Unity;
+using Il2CppAssets.Scripts.Unity.UI_New.InGame;
+using UnityEngine;
 
 namespace AbilityChoice.AbilityChoices.Hero.AdmiralBrickell;
 
@@ -135,5 +141,37 @@ public class MegaMine : HeroAbilityChoice
         proj.AddBehavior(slow);
 
         proj.hasDamageModifiers = true;
+    }
+}
+
+[HarmonyPatch(typeof(SelectPointInput), nameof(SelectPointInput.IsPositionValid))]
+internal static class SelectPointInput_IsPositionValid
+{
+    [HarmonyPostfix]
+    private static void Postfix(SelectPointInput __instance, Vector2 cursorPosWorld, ref bool __result)
+    {
+        var selectTargetCiData = __instance.cii;
+
+        if (selectTargetCiData?.targetInvalidImageId?.AssetGUID == ModContent.GetDisplayGUID<MegaMineInvalid>())
+        {
+            var point = new Il2CppAssets.Scripts.Simulation.SMath.Vector2(cursorPosWorld);
+            __result &= InGame.instance.bridge.Simulation.Map.GetAreaAtPoint(point)?.areaModel?.type == AreaType.water;
+        }
+    }
+}
+
+[HarmonyPatch(typeof(TargetSelectedPoint), nameof(TargetSelectedPoint.Initialise))]
+internal static class TargetSelectedPoint_Initialise
+{
+    [HarmonyPostfix]
+    private static void Postfix(TargetSelectedPoint __instance, Entity target)
+    {
+        if (__instance.targetSelectedPointModel.displayInvalid?.AssetGUID != ModContent.GetDisplayGUID<MegaMineInvalid>())
+            return;
+
+        var tower = InGame.instance.bridge.Simulation.towerManager.GetTowers().ToList()
+            .First(tower => tower.entity.Id == target.Parent.Id);
+
+        __instance.SetTargetPosition(tower.Position, true);
     }
 }

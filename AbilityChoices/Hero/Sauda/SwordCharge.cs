@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BTD_Mod_Helper.Api.Helpers;
 using BTD_Mod_Helper.Extensions;
+using HarmonyLib;
 using Il2CppAssets.Scripts.Models.Towers;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Abilities.Behaviors;
 using Il2CppAssets.Scripts.Models.Towers.Behaviors.Attack;
@@ -128,5 +129,17 @@ public class SwordCharge : HeroAbilityChoice
         {
             TechBotify(model);
         }
+    }
+}
+
+[HarmonyPatch(typeof(Il2CppAssets.Scripts.Simulation.Towers.Behaviors.Abilities.Behaviors.SwordCharge),
+    nameof(Il2CppAssets.Scripts.Simulation.Towers.Behaviors.Abilities.Behaviors.SwordCharge.HideTower))]
+internal static class SwordCharge_HideTower
+{
+    [HarmonyPrefix]
+    private static bool Prefix(
+        Il2CppAssets.Scripts.Simulation.Towers.Behaviors.Abilities.Behaviors.SwordCharge __instance)
+    {
+        return __instance.swordChargeModel.effectAtEndModel != null;
     }
 }
